@@ -5,9 +5,16 @@ import styles from "./burger.module.css";
 const Burger = ({ ingredients }) => {
   let ingredientLayers = Object.keys(ingredients)
     .map((ingKey) => {
-      return [...Array(ingredients[ingKey])].map((_, i) => {
-        return <BurgerIngredient key={ingKey + i} type={ingKey} />;
-      });
+      if (ingredients[ingKey] >= 0) {
+        return [...Array(ingredients[ingKey])].map((_, i) => {
+          return <BurgerIngredient key={ingKey + i} type={ingKey} />;
+        });
+      } else {
+        console.warn(
+          `User shouldn't be able to register negative number for ingredients @${ingKey}`
+        );
+        return null;
+      }
     })
     .reduce((arr, el) => {
       return arr.concat(el);
